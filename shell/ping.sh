@@ -3,8 +3,8 @@
 for i in {34..62}
 do
     thisip=107.167.11.$i
-    ping -w 1 -c 1 $thisip >/dev/null
-    if [ $? == 0 ]; then
+    ping -W 1 -c 1 $thisip >/dev/null 2>&1
+    if [ $? -eq 0  ] ; then
         echo this ip $thisip is ok!
     else
         echo this ip $thisip is none!
