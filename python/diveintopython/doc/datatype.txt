@@ -1,0 +1,72 @@
+1.Dictionary 
+    {"key":"value"}
+        1. dictionary 中不能有重复的key
+        2. dictionary 是无序的
+        3. dictionary 的key是大小写敏感
+        4. dictionary 的值可以是任意数据类型
+    dictionary 添加数据
+        d["add"]="add"
+    dictionary 删除数据
+        del d[key]  # del允许你使用key从一个dictionary钟删除独立的元素
+        d.clear()   # clear从一个元素中所有元素 {}表示一个没有元素的dictionary
+    dic.keys()
+    dic.values()
+    dic.items()
+2.list 
+    ['value0','value1']
+        1. list 保持着初始的顺序
+        2. list 第一个元素总是list[0]
+        3. list 负索引 li[-n] == li[len(li) - n]
+        4. list 的slice li[1:3] 返回新的list 包含第第一个slice索引(li[1])开始,
+                直到但不包含第二个索引(li[3])的所有元素
+        5. slice 索引是负数,slice也可以工作.
+        6. slice 左侧索引为0,可以省略,默认为0 右侧索引是list的长度,可以将其省略.
+    list 添加数据
+        1. li.append("add") # append 向list的末尾追加单个元素 可以是['value0',['valueadd','valueadd']]
+        2. li.insert(2,"add") # 将单个元素插入到list中,数值参数是插入点的索引.
+        3. li.extend(["two","add"]) # extend 用来连接list
+        4. extend 接受一个参数，这个参数总是一个 list，并且把这个 list 中的每个元素添加到原 list 中
+        5. append 接受一个参数，这个参数可以是任何数据类型， 并且简单地追加到 list 的尾部。List 可以包含任何类型的数据，也包括其他的 list。
+    list 中搜索
+        li = ['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new', 'two', 'elements']
+        1. index 在 list 中查找一个值的首次出现并返回索引值
+        2. 如果在 list 中没有找到值， Python 会引发一个异常。
+        3. 要测试一个值是否在 list 内，使用 in。如果值存在，它返回 True， 否则返为 False 。
+    list 中删除元素
+        1. li.remove("z") remove 从 list 中删除一个值的首次出现。remove 仅仅删除一个值的首次出现
+        2. 如果在 list 中没有找到值， Python 会引发一个异常来响应 index 方法
+        3. li.pop() pop 是一个有趣的东西。它会做两件事： 删除 list 的最后一个元素， 然后返回删除元素的值。
+    list 运算符
+        1. Lists 也可以用 + 运算符连接起来。 list= list+ otherlist 相当于list.extend(otherlist) 但 + 运算符把一个新 (连接后) 
+                的list作为值返回， 而extend 只修改存在的 list.对于大型 list 来说， extend 的执行速度要快一些
+        2. Python 支持 += 运算符 li += ['two'] 等同于 li.extend(['two'])。 
+                += 运算符可用于list、 字符串和整数，并且它也可以被重载用于用户自定义的类中.
+        3. * 运算符可以作为一个重复器作用于 list。 li = [1, 2] * 3 等同于 li = [1, 2] + [1,2] + [1, 2]， 即将三个 list 连接成一个。
+3.Tuple
+     t = ("a", "b", "mpilgrim", "z", "example")
+    Tuple 是不可变的 list。一旦创建了一个 tuple， 就不能以任何方式改变它
+        1. 定义tuple与定义list的方式相同,整个元素用小括号括起来
+        2. Tuple 的元素与 list 一样按定义的次序进行排序。 Tuples 的索引与 list 一样从 0 开始， 所以一个非空 tuple 的第一个元素总是 t[0]。
+        3. 负数索引与 list 一样从 tuple 的尾部开始计数
+        4. 与 list 一样分片 (slice) 也可以使用。 注意当分割一个 list 时，会得到一个新的 list ；当分割一个 tuple 时，会得到一个新的 tuple。
+        5. 不能向 tuple 增加,删除,查找元素 可以用in来查看一个元素是否存在于tuple中
+        6. tuple比list快, 对数据进行写保护
+        7. tuple 可以用在dictionary中当key用
+        8. Tuple 可以转换成 list， 反之亦然。内置的 tuple 函数接收一个 list， 并返回一个有着相同元素的 tuple。 而 list 函数接收一个 tuple 
+            返回一个 list。从效果上看， tuple 冻结一个 list， 而 list 解冻一个 tuple
+        9. 将一个 tuple赋值给另一个 tuple，会按顺序将 v 的每个值赋值给每个变量
+4.变量引用
+        1.一次赋多值
+        2.连续值 赋值
+        
+
+
+
+
+
+why is True
+        • 0 为 false; 其它所有数值皆为 true。
+        • 空串 ("") 为 false; 其它所有字符串皆为 true。
+        • 空 list ([]) 为 false; 其它所有 list 皆为 true。
+        • 空 tuple (()) 为 false; 其它所有 tuple 皆为 true。
+        • 空 dictionary ({}) 为 false; 其它所有 dictionary 皆为 true。

@@ -1,0 +1,14 @@
+sys module 
+1 sys.argv  sys.argv[0] sys.argv[1] 相当于shell $0 $1 
+2 sys.platform 
+    ostype=sys.platform
+    if ostype == "linux" or ostype == "linux2":
+        Cmd = "clear"
+    Else:
+        Cmd = "cls"
+3 sys.exit(n) 0正常退出其他异常退出
+4 sys.path  module路径 sys.path.append('new path')
+5 sys.modules  
+6 sys.stdin,sys.stdout,sys.stderr 重定向输出
+
+

@@ -1,0 +1,163 @@
+re module
+1 re.match(pattern,string,flags) 尝试从字符串的开始匹配一个模式
+        import re
+        text = "JGood is a handsome boy, he is cool, clever, and so on..."
+        m = re.match(r"(\w+)\s", text)
+        if m:
+            print m.group(0), '\n', m.group(1)
+        else:
+            print 'not match'
+    第一个参数是正则表达式，这里为"(\w+)\s"，如果匹配成功，则返回一个Match，否则返回一个None；
+    第二个参数表示要匹配的字符串；
+    第三个参数是标致位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。
+2 re.search(pattern, string, flags)
+    函数会在字符串内查找模式匹配,只到找到第一个匹配然后返回，如果字符串没有匹配，则返回None
+        import re
+        text = "JGood is a handsome boy, he is cool, clever, and so on..."
+        m = re.search(r'\shan(ds)ome\s', text)
+        if m:
+            print m.group(0), m.group(1)
+        else:
+            print 'not search'
+3 re.sub(pattern, repl, string, count)用于替换字符串中的匹配项。下面一个例子将字符串中的空格 ' ' 替换成 '-' :  
+        import re
+        text = "JGood is a handsome boy, he is cool, clever, and so on..."
+        print re.sub(r'\s+', '-', text)
+4 re.split 可以使用re.split来分割字符串，如：re.split(r'\s+', text)；将字符串按空格分割成一个单词列表。
+5 re.findall 可以获取字符串中所有匹配的字符串。如：re.findall(r'\w*oo\w*', text)；获取字符串中，包含'oo'的所有单词。
+6 re.compile 可以把正则表达式编译成一个正则表达式对象。可以把那些经常使用的正则表达式编译成正则表达式对象，这样可以提高一
+定的效率。下面是一个正则表达式对象的一个例子：
+        import re
+        text = "JGood is a handsome boy, he is cool, clever, and so on..."
+        regex = re.compile(r'\w*oo\w*')
+        print regex.findall(text)   #查找所有包含'oo'的单词
+        print regex.sub(lambda m: '[' + m.group(0) + ']', text) #将字符串中含有'oo'的单词用[]括起来。
+
+正则表达式:
+    正则表达式的元字符有 . ^ $ * ? { [ ] | ( )
+    . 代表任意字符串
+    []用来匹配一个指定的字符类型,所谓的字符类型就是你想匹配的一个字符集,对于字符集中的字符可以理解成活的关系
+    ^如果放在字符串的开始,则表示非,[^5]表示除5之外的其他字符, 而如果^不在字符串的开头,则表示他本身
+
+    具有重复功能的元字符
+        *对于前一个字符重复0到无穷次
+        +对于前一个字符重复1到无穷次
+        ?对于前一个字符重复0到1次
+        {m,n}对于前一个字符重复次数为m到n次,其中,{0,} = *,{1,} = + , {0,1} = ?
+        {m} 对于前一个字符重复m次
+    \d 匹配任何十进制数;它相当于类[0-9]
+    \D 匹配任何非数字字符; 相当于[^0-9]
+    \s 匹配任何空白字符; 相当于[ fv]
+    \S 匹配任何非空白字符; 相当于[ ^fv]
+    \w 匹配任何字符数字字符;相当于[a-zA-Z0-9_]
+    \W 匹配任何非字母数字字符;相当于[^a-zA-Z0-9_]
+
+正则表达式(可以称为REs，regex，regex pattens)是一个小巧的，高度专业化的编程语言，它内嵌于python开发语言中，可通过re模块使用。正则表达式的
+pattern可以被编译成一系列的字节码，然后用C编写的引擎执行。下面简单介绍下正则表达式的语法
+正则表达式包含一个元字符(metacharacter)的列表，列表值如下:    . ^ $ * + ? {} [ ] \ | ( )
+    1 元字符([]),他用来指定一个character class.所谓character classes 就是你想要匹配的字符(character)的集合.字符(character)可以单个的列出,也可以通过"-"分分隔两个字符来表示一个范围.例如,[abc]匹配a,b,c当中任意一个字符,[abc]也可以用[a-c].
+    元字符(metacharacters)在character class 里面不起作用,如[akm$]将匹配'a','k','m','$'中的任意一个 $是一个普通字符
+    2 元字符[^].可以用来补集来匹配不在取件范围内的字符,[^5]除5以外的 ^ab+表示以ab开头的字符串
+    举例:
+       print  re.search("^ab+","asdfabbbb")
+       print  re.search("ab+","asdfabbbb").group()
+       print  re.search("[abc^]","^").group()
+
+    不过对于元字符”^”有这么一个疑问.官方文档http://docs.python.org/library/re.html有关元字符”^”有这么一句话，Matches the start of the string, and in MULTILINE mode also matches immediately after each newline.我理解的是”^”匹配字符串的开始，在MULTILINE模式下，也匹配换行符之后。
+　     print  re.search("^a\w+","abcdfa\na1b2c3").group()
+　    'abcdfa'
+　     print  re.search("^a\w+","abcdfa\na1b2c3",re.MULTILINE).group()
+　    'abcdfa'
+    我为flag设定为re.MULTILINE，根据上面那段话，他也应该匹配换行符之后，所以应该有m.group应该有"a1b2c3",但是结果没有，用findall来尝试，可以找到结果。所以这里我理解之所以group里面没有，是因为search和match方法是匹配到就返回，而不是去匹配 所有。
+　   print re.findall("^a\w+","abcdfa\na1b2c3",re.MULTILINE)
+　   ['abcdfa', 'a1b2c3']
+    
+    3 元字符(\) 元字符backslash 作为python中的字符串字母,反斜杠后面可以加不同的字符以表示不同特殊的意义
+        \[  取消[特殊意义
+    4 元字符($)匹配字符串结尾或者字符串结尾的换行之前.(在MULTILINE模式下,"$"也可以匹配行还之前)正则表达式"foo"即匹配"foo"也匹配"foobar" 而"foo$"仅仅匹配"foo".
+        print re.findall("foo.$","fool\nfoo2\n") 匹配字符串的结尾的换行符之前
+        print re.findall("foo.$","foo1\nfoo2\n",re.MULTITLINE) re.MULTITLINE每行做匹配
+    5 元字符(*) 匹配0个或多个
+    6 元字符(?) 匹配1个或0个
+    7 元字符(+) 匹配1个或多个
+    8 元字符(|) 表示"或",如A|B 其中A,B为正则表达式,表示匹配A或者B
+    9 元字符({})
+        {m},用来表示前面正则表达式的m次copy, 如"a{5}",表示匹配5个"a,
+         re.findall("a{5}","aaaaaaaaa")
+         re.findall("a{5}","aaaaaaaaaa")
+        {m.n}用来表示前面正则表达式的m到n次copy,尝试匹配尽可能多的copy
+         re.findall("a{2,4}","aaaaaaa")  可以看到{m,n}，正则表达式优先匹配n，而不是m，因为结果不是["aa","aa","aa","aa"]
+        {m,n}?  用来表示前面正则表达式的m到n次copy，尝试匹配尽可能少的copy
+         re.findall("a{2,4}","aaaaaaaa")
+    10 元字符(  "( )" ),用来表示一个group的开始和结束
+        比较常用的有(REs),(?P<name>REs),这是无名称的组和有名称的group，有名称的group，可以通过matchObject.group(name)
+        获取匹配的group，而无名称的group可以通过从1开始的group序号来获取匹配的组，如matchObject.group(1)。具体应用将在下面的group()方法中举例讲解
+    11 元字符(.)
+        元字符. 在默认模式下,匹配除换行符外的所有字符.在DOTALL模式下,匹配所有字符,包括换行符
+Match Object 对象拥有的方法
+    1 group ([group1,…])
+        返回匹配到的一个或多个子组.如果是一个参数,那么结果就是一个字符串,如果是多个参数,那么结果就是一个参数一个item的元组,group1的默认值是0(将返回所有的匹配值),如果groupN参数为0,相对应的返回值就是全部匹配的字符串,如果group1的值是[1-99]范围之内的,那么将匹配对应括号组的字符串,如果组号是负的或者比pattern重定义的组号大,那么将抛出IndexError异常.如果pattern没有匹配到,但是group匹配到了,那么group的值为None.如果一个pattern可以匹配多个,那么组对应的是样式匹配的最后一个.另外子组是根据括号 从左到右进行区分的
+
+         print re.match("(\w+) (\w+)","abcd efgh,chaj").group()
+         print re.match("(\w+) (\w+)","abcd efgh,chaj").group(0)
+         print re.match("(\w+) (\w+)","abcd efgh,chaj").group(1)
+         print re.match("(\w+) (\w+)","abcd efgh,chaj").group(2)
+         print re.match("(\w+) (\w+)","abcd efgh,chaj").group(1,2)
+        If a group matches multiple times, only the last match is accessible:
+        如果一个组匹配多个，那么仅仅返回匹配的最后一个的。
+         s = "afkak1aafal12345adadsfa"
+         pattern = r"(\d)\w+(\d{2})\w"
+         m = re.match(pattern,s)
+         print m
+         m=re.search(pattern,s)
+         m.group()
+
+    2.groups([default])
+        返回一个包含所有子组的元组。Default是用来设置没有匹配到组的默认值的。Default默认是"None”,
+         m = re.match ("(\d+)\.(\d+)","23.123")
+         m.groups()
+
+         m = re.match("(\d+)\.?(\d+)?","24")
+    3.groupdict([default])
+        返回匹配到的所有命名子组的字典.key是name的值,value是匹配的值.参数default是没有匹配到的子组的默认值.这与groups()方法的参数是一样的.默认值为None
+        m = re.match("(\w+) (\w+)","Hello world")
+        m.groupdict()
+        m = re.match("(?P<first>\w+) (?P<secode>\w+)","hello world")
+        m.groupdict()
+        通过上例可以看出，groupdict()对没有name的子组不起作用
+正则表达式对象
+    re.search(string[,pos[,endpos]])
+        扫描字符串string,查找与正则表达式匹配的位置.如果找到了一个匹配就返回一个MatchObject对象(并不会匹配所有的).如果没有找到那么就返回None
+        第二个参数表示从字符串的哪个位置开始,默认是0
+        第三个参数endpos限定字符串最远被查找到哪里默认值就是字符串的长度.
+         m = re.search("abcd",'1abcd2abcd')
+         m.group()
+    re.split(pattern,string[, maxsplit=0, flags=0])
+        用pattern来拆分string 如果pattern有含有括号,那么pattern中所有的组也会返回
+         re.split("\W+","words,words,works",1)
+         re.split("[a-z]","0A3b9z",re.IGNORECASE)
+         re.split("[a-z]+","0A3b9z",re.IGNORECASE)
+         re.split("[a-zA-Z]+","0A3b9z")
+         re.split('[a-f]+', '0a3B9', re.IGNORECASE)#re.IGNORECASE用来忽略pattern中的大小写。
+        如果在split的时候捕获了组，并且匹配字符串的开始，那么返回的结果将会以一个空串开始。
+         re.split('(\W+)', '...words, words...')
+         re.split('(\W+)', 'words, words...')
+    re.findall(pattern, string[, flags]
+        以list的形式返回string中所有与pattern匹配的不重叠的字符串。String从左向右扫描，匹配的返回结果也是以这个顺序。
+         re.findall('(\W+)', 'words, words...')
+         re.finditer('(\W+)', 'words, words...')
+         re.findall('(\W+)d', 'words, words...d')
+         re.finditer('(\W+)d', 'words, words...d')         
+         re.finditer('(\W+)d', '...dwords, words...d')
+         re.findall('(\W+)d', '...dwords, words...d')
+    re.finditer(pattern, string[, flags])
+        与findall类似，只不过是返回list，而是返回了一个叠代器
+         re.sub("\d","abc1def2hijk","RE")
+         x=re.sub("\d","abc1def2hijk","RE")
+         re.sub("\d","RE","abc1def2hijk",)
+         通过例子我们可以看出sub和subn的差别：sub返回替换后的字符串，而subn返回由替换后的字符串以及替换的个数组成的元组。
+    re.sub(pattern, repl, string[, count, flags])
+        用repl替换字符串string中的pattern。如果pattern没有匹配到，那么返回的字符串没有变化]。Repl可以是一个字符串，也可以是 一个function。如果是字符串，如果repl是个方法/函数。对于所有的pattern匹配到。他都回调用这个方法/函数。这个函数和方法使用单个 match object作为参数，然后返回替换后的字符串。下面是官网提供的例子:
+        >>> def dashrepl(matchobj):
+        ...     if matchobj.group(0) == '-': return ' '
+        ...     else: return
