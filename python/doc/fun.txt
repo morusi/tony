@@ -1,0 +1,30 @@
+list的方法:
+    append
+    count
+    extend
+    index
+    insert
+    pop
+    remove
+    reverse
+    sort
+dict的方法:
+    clear
+    copy
+    fromkeys
+    get
+    has_key
+    items
+    iteritems
+    iterkeys
+    itervalues
+    keys
+    pop
+    popitem
+    setdefault
+    update
+    values
+Tuple的方法:
+    count
+    index
+
