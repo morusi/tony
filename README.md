@@ -1,3 +1,0 @@
-tony
-====
-learn python
