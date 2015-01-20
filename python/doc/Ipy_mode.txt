@@ -1,0 +1,27 @@
+#
+wget https://pypi.python.org/packages/source/I/IPy/IPy-0.82a.tar.gz --no-check-certificate
+
+from IPy import IP
+ip = IP('192.168.1.20')
+ip.reverseNames() # 反向解析地址
+ip.iptype() # ip 为私有网类型"PRIVATE"
+IP('8.8.8.8').iptype() # ip为公网类型
+IP("8.8.8.8").int() # 转换为整数格式
+IP("8.8.8.8").strHex() # 转换为16进制格式
+IP("8.8.8.8").strBin() # 转换为2进制格式
+
+print(IP(0x80808080)) # 16 进制转换为IP地址
+
+from IPy import IP # 根据IP与掩码生成网段
+print(IP('192.168.1.0').make_net('255.255.255.0'))
+print(IP('192.168.1.0/255.255.255.0',make_net=True))
+print(IP('192.168.1.0-192.168.1.255',make_net=True)) 
+
+
+也可以通过strNormal方法指定不同wantprefixlen参数值以定制不同输出类型的网段。
+输出类型为字符串，如下：
+IP('192.168.1.0/24').strNormal(0) # wantprefixlen = 0，无返回，如192.168.1.0；
+IP('192.168.1.0/24').strNormal(1) # wantprefixlen = 1，prefix格式，如192.168.1.0/24；
+IP('192.168.1.0/24').strNormal(2) # wantprefixlen = 2，decimalnetmask格式，如192.168.1.0/255.255.255.0；
+IP('192.168.1.0/24').strNormal(3) # wantprefixlen = 3，lastIP格式，如192.168.1.0-192.168.1.255。
+

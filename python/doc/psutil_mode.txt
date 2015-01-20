@@ -1,0 +1,63 @@
+﻿#
+wget  https://pypi.python.org/packages/source/p/psutil/psutil-2.0.0.tar.gz --no-check-certificate
+CPU
+
+psutil.cpu_time() # 使用cpu方法获取cpu完整信息
+psutil.cpu_time(percpu=True) # 显示所有逻辑CPU信息
+psutil.cpu_count() # 获取CPU的逻辑个数 默认 logical=True
+psutil.cpu_count(logical=False) # 获取物理CPU的个数 
+
+Memory
+
+mem = psutil.virtual_memory() # 获取内存完整信息
+mem.total # 获取内存总数
+mem.free # 获取空闲内存数
+psutil.swap_memory() # 获取SWAP分区信息
+
+Disk
+
+psutil.disk_partitions() # 获取磁盘完整信息
+psutil.disk_usage('/') # 获取分区(参数)的使用情况
+psutil.disk_io_counters() # 获取IO个数,读写信息
+psutil.disk_io_counters(perdisk=True) # perdis=True 获取单个分区IO个数,读写信息
+
+Network
+
+psutil.net_io_counters() # 获取网络总的IO信息,默认pernic=False
+psutil.net_io_counters(pernic=True) 输出每个网络接口的IO信息
+
+Other 
+
+psutil.users()  # 获取当前登陆系统的用户信息
+psutil.boot_time() # 获取开机时间,以Linux 时间戳格式返回 1421762788.0
+import datetime
+datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
+
+psutil.pids() # 列出所有进程PID
+p = psutil.Process(1) # 实例化一个进程,参数为进程PID
+p.name() # 进程名
+p.exe() # 进程bin路径
+p.cwd() # 进程工作目录绝对路径
+p.status() # 进程状态
+p.create_time() # 进程创建时间,时间戳格式
+p.uids() # 进程UID信息
+p.gids() # 进程GID信息
+p.cpu_times() # 进程CPU时间信息,包括user,system两个CPU时间
+p.cpu_affinity() # get进程CPU亲和力, 如果要设置进程CPU亲和度,讲cpu号作为参数即可
+p.cpu_percent() # 进程内存利用率
+p.memory_info() # 进程内存rss,vms信息
+p.io_counters() # 进程IO信息 包括读写IO数及字节数
+p.connections() # 返回打开进程socket 的namedutples列表, 包括 fs ,family,laddr 等信息
+p.num_threads() # 进程开启的线程数
+
+class Popen
+	"""通过Popen方法启动的应用程序,可以追踪该程序运行的所有相关信息"""
+import psutil
+from subprocess import PIPE
+p =  psutil.Popen(["/usr/bin/python","-c","print('hello')"],stdout=PIPE)
+p.name()
+p.username()
+p.communicate()
+p.cpu_times() 
+
+
