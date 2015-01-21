@@ -35,3 +35,23 @@ IP('192.168.1.0/24').strNormal(3) # wantprefixlen = 3，lastIP格式，如192.16
 IP('10.0.0.0/24') < IP('12.0.0.0/24')
 '192.168.1.100' in IP('192.168.1.0/24')
 IP('192.168.1.0/24') in IP('192.168.0.0/16')
+判断两个网段是否存在重叠,采用IPy 提供的overlaps方法:
+IP('192.168.0.0/23').overlaps('192.168.1.0/24') # 返回1 代表存在重叠 
+IP('192.168.1.0/24').overlaps('192.168.2.0') # 返回0 代表不存在重叠
+
+根据输入的IP或子网 返回网络,掩码,广播,反向解析,子网数,IP类型等信息
+#!/usr/bin/env python
+from IPy import IP
+ip_s = raw_input('Please input an IP or net-range:') #接受用户输入,参数为IP地址或网段地址
+ips = IP(ip_s) 
+if len(ips) > 1:
+    print ('net: %s' % ips.net()) # 输出网络地址
+    print ('netmask: %s' % ips.netmask()) # 输出网络掩码地址
+    print ('broadcast: %s' % ips.broadcast())  # 输出网络广播地址
+    print ('reverse address: %s' % ips.reverseNames()[0]) # 输出地址反向解析
+    print ('subnet: %s' % len(ips)) #输出网络子网数
+else:  # 为单个IP
+    print ('reverse address: %s' % ips.reverseNames()[0])  # 输出IP反向解析
+print ('hexadecimal: %s' % ips.strHex()) # 输出16进制地址
+print ('binary ip: %s' % ips.strBin()) # 输出2进制地址
+print ('iptyep: %s' % ips.iptype()) # 输出地址类型 
