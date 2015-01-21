@@ -2,6 +2,12 @@
 wget https://pypi.python.org/packages/source/I/IPy/IPy-0.82a.tar.gz --no-check-certificate
 
 from IPy import IP
+ip = IP('192.168.0.1/16')
+print ip.len()
+for x in ip:
+    print(x)
+
+from IPy import IP
 ip = IP('192.168.1.20')
 ip.reverseNames() # 反向解析地址
 ip.iptype() # ip 为私有网类型"PRIVATE"
@@ -25,3 +31,7 @@ IP('192.168.1.0/24').strNormal(1) # wantprefixlen = 1，prefix格式，如192.16
 IP('192.168.1.0/24').strNormal(2) # wantprefixlen = 2，decimalnetmask格式，如192.168.1.0/255.255.255.0；
 IP('192.168.1.0/24').strNormal(3) # wantprefixlen = 3，lastIP格式，如192.168.1.0-192.168.1.255。
 
+计算网络是否存在包含,重叠等关系
+IP('10.0.0.0/24') < IP('12.0.0.0/24')
+'192.168.1.100' in IP('192.168.1.0/24')
+IP('192.168.1.0/24') in IP('192.168.0.0/16')
