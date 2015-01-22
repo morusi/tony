@@ -12,11 +12,38 @@ class query(self, qname, rdtype=1, rdclass=1, tcp=False, source=None, raise_on_n
     tcp # 参数用来指定查询是否启用TCp协议,默认是False
     source 与 source_port # 参数用作为知道那个查询源地址与端口,默认值为查询设备IP地址和0
     raise_on_no_answer # 参数用于指定当查询无应答时是否触发异常, 默认为True
+A记录
 #!/usr/bin/env python 
 import dns.resolver
 
 domain = raw_input('Please input an domain:') # 输入域名地址
 A = dns.resolver.query(domain,'A') # 指定查询类型为A记录
-for i in A.respon.answer: # 通过response.answer 方法获取查询回应信息
+for i in A.response.answer: # 通过response.answer 方法获取查询回应信息
     for j in i.items:    # 遍历回应信息
         print j.address
+
+MX记录
+#!/usr/bin/env python
+import dns.resolver
+domain = raw_input('Please input an domain:') 
+MX = dns.resolver.query(domain,'MX')
+for i in MX:
+    print 'MX preference= ', i.preference,  'mail exchanger =', i.exchange
+NS记录
+#!/usr/bin/env python
+import dns.resolver
+
+domain = raw_input('Please input an domain:')
+ns = dns.resolver.query(domain,'NS')
+for i in ns.response.answer:
+    for j in i.items:
+        print j.to_text()
+CNAME记录
+
+#!/usr/bin/env python
+import dns.resolver
+domain = raw_input('Please input an domain: ')
+cname = dns.resolver.query(domain,'CNAME')
+for i in cname.response.answer:
+    for j in i.items:
+        print j.to_text()
